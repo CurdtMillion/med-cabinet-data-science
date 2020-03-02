@@ -4,8 +4,9 @@ from dotenv import load_dotenv
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from nearest_neighbors_model import predict
-import psycopg2
 import os
+import psycopg2
+
 
 
 def create_app():
@@ -41,5 +42,9 @@ def create_app():
         """
         return 'Minimum viable version.'
 
+    @app.route("/<test>", methods=['GET'])
+    def predict_strain(text=None):
+        predictions = predict(text)
+        return jsonify(predictions)
 
     return app
