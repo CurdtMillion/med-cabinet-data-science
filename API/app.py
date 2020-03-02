@@ -1,1 +1,1 @@
-# Flask API
+from nearest_neighbors_model import predict
