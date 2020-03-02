@@ -3,6 +3,7 @@ from decouple import config
 from dotenv import load_dotenv
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from nearest_neighbors_model import predict
 import psycopg2
 import os
 
