@@ -11,7 +11,10 @@ strains = pd.read_csv("../data/processed/nn_model_strains.csv")
 def predict(request_text):
     transformed = transformer.transform(request_text)
     dense = transformed.todense()
-    best_recommendation = model.kneighbors(dense)[1][0][0]
-    strain = strains.iloc[best_recommendation]
-    output = strain.drop(['Unnamed: 0', 'name', 'ailment', 'all_text', 'lemmas']).to_dict()
-    return output
+    recommendations = model.kneighbors(dense)[1][0]
+    output_array = []
+    for recommendation in recommendations:
+        strain = strains.iloc[recommendation]
+        output = strain.drop(['Unnamed: 0', 'name', 'ailment', 'all_text', 'lemmas']).to_dict()
+        output_array.append(output)
+    return output_array
