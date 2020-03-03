@@ -11,7 +11,12 @@ flask-sqlalchemy = "*"
 python-decouple = "*"
 psycopg2-binary = "*"
 python-dotenv = "*"
+<<<<<<< HEAD
 gunicorn = "*"
+=======
+pandas = "*"
+scikit-learn = "*"
+>>>>>>> 5aeae7f1221dfacea95ea32c5100ac3ad2031c5b
 
 [requires]
 python_version = "3.7"

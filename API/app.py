@@ -4,8 +4,10 @@ from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 # from nearest_neighbors_model import predict
-import psycopg2
+
 import os
+import psycopg2
+
 
 #######################################################################################################################
 """ This section to be cleaned up eventually but put in place to have a working pipeline for now"""
@@ -25,7 +27,7 @@ def predict(request_text):
     best_recommendation = model.kneighbors(dense)[1][0][0]
     strain = strains.iloc[best_recommendation]
     output = strain.drop(['Unnamed: 0', 'name', 'ailment', 'all_text', 'lemmas']).to_dict()
-    return output
+    return [output]
 #######################################################################################################################
 
 def create_app():
@@ -54,7 +56,12 @@ def create_app():
     @app.route('/predict', methods=['POST', 'GET'])
     def root():
         req_data = request.get_json(force=True)
-        return predict(req_data)
+        output = predict(req_data)
+        return jsonify(output)
 
+    @app.route("/<test>", methods=['GET'])
+    def predict_strain(text=None):
+        predictions = predict(text)
+        return jsonify(predictions)
 
     return app
