@@ -11,6 +11,9 @@ flask-sqlalchemy = "*"
 python-decouple = "*"
 psycopg2-binary = "*"
 python-dotenv = "*"
+gunicorn = "*"
+flask-migrate = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"
