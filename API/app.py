@@ -4,8 +4,10 @@ from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 # from nearest_neighbors_model import predict
-import psycopg2
+
 import os
+import psycopg2
+
 
 #######################################################################################################################
 """ This section to be cleaned up eventually but put in place to have a working pipeline for now"""
@@ -56,5 +58,9 @@ def create_app():
         req_data = request.get_json(force=True)
         return predict(req_data)
 
+    @app.route("/<test>", methods=['GET'])
+    def predict_strain(text=None):
+        predictions = predict(text)
+        return jsonify(predictions)
 
     return app
