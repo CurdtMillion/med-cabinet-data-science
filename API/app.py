@@ -1,13 +1,34 @@
 """Main application and routing logic for MEDCABINET_API"""
 from decouple import config
 from dotenv import load_dotenv
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-from nearest_neighbors_model import predict
+# from nearest_neighbors_model import predict
+
 import os
 import psycopg2
 
 
+#######################################################################################################################
+""" This section to be cleaned up eventually but put in place to have a working pipeline for now"""
+import pickle
+import pandas as pd
+from sklearn.neighbors import NearestNeighbors
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+model = pickle.load(open("../models/nearest_neighbors_model.sav", "rb"))
+transformer = pickle.load(open("../models/transformer.sav", "rb"))
+strains = pd.read_csv("../src/data/nn_model_strains.csv")
+
+
+def predict(request_text):
+    transformed = transformer.transform(request_text)
+    dense = transformed.todense()
+    best_recommendation = model.kneighbors(dense)[1][0][0]
+    strain = strains.iloc[best_recommendation]
+    output = strain.drop(['Unnamed: 0', 'name', 'ailment', 'all_text', 'lemmas']).to_dict()
+    return output
+#######################################################################################################################
 
 def create_app():
     """Create and configure an instance of the Flask application"""
@@ -32,15 +53,10 @@ def create_app():
     db = SQLAlchemy(app)
     db.init_app(app)
 
-
-    @app.route("/")
+    @app.route('/predict', methods=['POST', 'GET'])
     def root():
-        """Root page
-        
-        Returns:
-            Should provide a link to base.html
-        """
-        return 'Minimum viable version.'
+        req_data = request.get_json(force=True)
+        return predict(req_data)
 
     @app.route("/<test>", methods=['GET'])
     def predict_strain(text=None):
