@@ -25,7 +25,7 @@ def predict(request_text):
     best_recommendation = model.kneighbors(dense)[1][0][0]
     strain = strains.iloc[best_recommendation]
     output = strain.drop(['Unnamed: 0', 'name', 'ailment', 'all_text', 'lemmas']).to_dict()
-    return output
+    return [output]
 #######################################################################################################################
 
 def create_app():
@@ -54,7 +54,8 @@ def create_app():
     @app.route('/predict', methods=['POST', 'GET'])
     def root():
         req_data = request.get_json(force=True)
-        return predict(req_data)
+        output = predict(req_data)
+        return jsonify(output)
 
 
     return app
