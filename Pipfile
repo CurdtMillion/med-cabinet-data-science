@@ -6,17 +6,18 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
+python = "*"
 flask = "*"
 flask-sqlalchemy = "*"
-python-decouple = "*"
-psycopg2-binary = "*"
+flask-migrate = "*"
 python-dotenv = "*"
-<<<<<<< HEAD
-gunicorn = "*"
-=======
-pandas = "*"
+requests = "*"
+basilica = "*"
 scikit-learn = "*"
->>>>>>> 5aeae7f1221dfacea95ea32c5100ac3ad2031c5b
+gunicorn = "*"
+psycopg2-binary = "*"
+pandas = "*"
+pickle = "*"
 
 [requires]
 python_version = "3.7"

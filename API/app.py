@@ -1,40 +1,25 @@
-"""Main application and routing logic for MEDCABINET_API"""
+"""
+Main application and routing logic
+"""
+# Standard imports
+import os
+
+#  Database + Heroku + Postgres
 from decouple import config
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-# from nearest_neighbors_model import predict
-
-import os
 import psycopg2
+from .models import DB
 
-
-#######################################################################################################################
-""" This section to be cleaned up eventually but put in place to have a working pipeline for now"""
-import pickle
-import pandas as pd
-from sklearn.neighbors import NearestNeighbors
-from sklearn.feature_extraction.text import TfidfVectorizer
-
-model = pickle.load(open("../models/nearest_neighbors_model.sav", "rb"))
-transformer = pickle.load(open("../models/transformer.sav", "rb"))
-strains = pd.read_csv("../src/data/nn_model_strains.csv")
-
-
-def predict(request_text):
-    transformed = transformer.transform(request_text)
-    dense = transformed.todense()
-    best_recommendation = model.kneighbors(dense)[1][0][0]
-    strain = strains.iloc[best_recommendation]
-    output = strain.drop(['Unnamed: 0', 'name', 'ailment', 'all_text', 'lemmas']).to_dict()
-    return [output]
-#######################################################################################################################
+# import model
+from models.nearest_neighbors_model import predict
 
 def create_app():
     """Create and configure an instance of the Flask application"""
-    app = Flask(__name__)    
+    app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = config("DB_URL")
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # load file from .env file
     load_dotenv()
@@ -42,22 +27,33 @@ def create_app():
     db_user = os.getenv("DB_USER")
     db_password = os.getenv("DB_PASSWORD")
     db_host = os.getenv("DB_HOST")
-    
+
     # establish cursor and connection
     connection = psycopg2.connect(dbname=db_name, user=db_user, password=db_password, host=db_host)
     print("CONNECTION:", connection)
     cursor = connection.cursor()
-    print("CURSOR:", cursor) 
-    
-    
+    print("CURSOR:", cursor)
+
+
     db = SQLAlchemy(app)
     db.init_app(app)
+
+    @app.route('/')
+    def root():
+        DB.create_all()
+        return "welcome to Med Cab"
 
     @app.route('/predict', methods=['POST', 'GET'])
     def root():
         req_data = request.get_json(force=True)
         output = predict(req_data)
         return jsonify(output)
+
+    @app.route('/strains', methods=['POST'])
+    def strains():
+
+
+        return output
 
     @app.route("/<test>", methods=['GET'])
     def predict_strain(text=None):
