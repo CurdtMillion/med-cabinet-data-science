@@ -13,7 +13,7 @@ import psycopg2
 from .models import DB
 
 # import model
-from models.nearest_neighbors_model import predict
+from nearest_neighbors_model import predict
 
 def create_app():
     """Create and configure an instance of the Flask application"""
