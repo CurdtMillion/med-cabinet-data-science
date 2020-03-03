@@ -1,2 +1,2 @@
 
-web: gunicorn "API":app.
+web: gunicorn "API":create_app()"
