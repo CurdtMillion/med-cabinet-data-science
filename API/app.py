@@ -13,12 +13,12 @@ import psycopg2
 from .models import DB
 
 # import model
-from nearest_neighbors_model import predict
+from API.nearest_neighbors_model import predict
 
 def create_app():
     """Create and configure an instance of the Flask application"""
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = config("DB_URL")
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DB_URL")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # load file from .env file
@@ -34,30 +34,21 @@ def create_app():
     cursor = connection.cursor()
     print("CURSOR:", cursor)
 
-
+    # binding the instance to a very specific Flask app
+    # initialize app for use with this database setup
     db = SQLAlchemy(app)
     db.init_app(app)
 
+    # root route
     @app.route('/')
     def root():
         DB.create_all()
-        return "welcome to Med Cab"
+        return "Welcome to Med Cab"
 
-    @app.route('/predict', methods=['POST', 'GET'])
-    def root():
-        req_data = request.get_json(force=True)
-        output = predict(req_data)
-        return jsonify(output)
-
-    @app.route('/strains', methods=['POST'])
-    def strains():
-
-
-        return output
-
-    @app.route("/<test>", methods=['GET'])
-    def predict_strain(text=None):
+    # TODO: Make text value dynamic
+    @app.route("/test", methods=['GET'])
+    def predict_strain(text='I have fibromyalgia and I want pain relief'):
         predictions = predict(text)
-        return jsonify(predictions)
-
+        return str(predictions)
+    
     return app
