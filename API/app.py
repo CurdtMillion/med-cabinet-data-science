@@ -11,8 +11,9 @@ from flask_sqlalchemy import SQLAlchemy
 import psycopg2
 from .models import DB, Strain
 
-# import model
-#from nearest_neighbors_model import predict
+from API.nearest_neighbors_model import fishbarrel
+
+fishbarrel()
 
 
 ####################################################

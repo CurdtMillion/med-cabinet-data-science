@@ -20,3 +20,5 @@ def predict(request_text):
         output_array.append(output)
     return output_array
 
+def fishbarrel():
+    print('Moffuggin fishbarrel, dawg')
