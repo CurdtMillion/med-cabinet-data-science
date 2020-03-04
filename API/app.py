@@ -45,9 +45,9 @@ def create_app():
         DB.create_all()
         return "Welcome to Med Cab"
 
-    # TODO: Make text value dynamic
     @app.route("/test", methods=['GET'])
-    def predict_strain(text='I have fibromyalgia and I want pain relief'):
+    def predict_strain(test):
+        text = request.get_json(force=True)
         predictions = predict(text)
         return jsonify(predictions)
     
