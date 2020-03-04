@@ -23,9 +23,18 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 # changed from relative to to full path
-model = pickle.load(open("nearest_neighbors_model.sav", "rb"))
-transformer = pickle.load(open("transformer.sav", "rb"))
-strains = pd.read_csv("nn_model_strains.csv")
+
+
+strains = pd.read_csv("https://raw.githubusercontent.com/Build-Week-Med-Cabinet-3/Data-Science/master/API/nn_model_strains.csv")
+
+transformer = TfidfVectorizer(stop_words="english", min_df=0.025, max_df=0.98, ngram_range=(1,3))
+
+dtm = transformer.fit_transform(strains['lemmas'])
+dtm = pd.DataFrame(dtm.todense(), columns=tfidf.get_feature_names())
+
+model = NearestNeighbors(n_neighbors=3, algorithm='kd_tree')
+model.fit(dtm)
+
 
 
 def predict(request_text):
