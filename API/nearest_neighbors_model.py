@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+# changed from relative to to full path
 model = pickle.load(open("/home/andronik/repos/Data-Science/models/nearest_neighbors_model.sav", "rb"))
 transformer = pickle.load(open("/home/andronik/repos/Data-Science/models/transformer.sav", "rb"))
 strains = pd.read_csv("/home/andronik/repos/Data-Science/src/data/nn_model_strains.csv")
