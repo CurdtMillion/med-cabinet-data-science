@@ -4,9 +4,9 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 # changed from relative to to full path
-model = pickle.load(open("nearest_neighbors_model.sav", "rb"))
-transformer = pickle.load(open("transformer.sav", "rb"))
-strains = pd.read_csv("../src/data/nn_model_strains.csv")
+model = pickle.load(open("models/nearest_neighbors_model.sav", "rb"))
+transformer = pickle.load(open("models/transformer.sav", "rb"))
+strains = pd.read_csv("src/data/nn_model_strains.csv")
 
 
 def predict(request_text):
