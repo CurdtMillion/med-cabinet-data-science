@@ -54,7 +54,7 @@ from API.nearest_neighbors_model import predict
 
 def create_app():
     """Create and configure an instance of the Flask application"""
-    # app = Flask(__name__)
+    app = Flask(__name__)
     # consider using config
     # app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DB_URL")
     # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -80,7 +80,7 @@ def create_app():
     # root route
     @app.route('/')
     def root():
-        DB.create_all()
+        # DB.create_all()
         return "Welcome to Med Cab"
     @app.route("/test", methods=['POST', 'GET'])
     def predict_strain():
