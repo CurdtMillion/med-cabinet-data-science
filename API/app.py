@@ -30,7 +30,7 @@ strains = pd.read_csv("https://raw.githubusercontent.com/Build-Week-Med-Cabinet-
 transformer = TfidfVectorizer(stop_words="english", min_df=0.025, max_df=0.98, ngram_range=(1,3))
 
 dtm = transformer.fit_transform(strains['lemmas'])
-dtm = pd.DataFrame(dtm.todense(), columns=tfidf.get_feature_names())
+dtm = pd.DataFrame(dtm.todense(), columns=transformer.get_feature_names())
 
 model = NearestNeighbors(n_neighbors=3, algorithm='kd_tree')
 model.fit(dtm)
