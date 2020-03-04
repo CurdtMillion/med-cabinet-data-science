@@ -5,7 +5,6 @@ Main application and routing logic
 import os
 
 #  Database + Heroku + Postgres
-from decouple import config
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
@@ -15,10 +14,11 @@ from .models import DB
 # import model
 from nearest_neighbors_model import predict
 
+
 def create_app():
     """Create and configure an instance of the Flask application"""
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = config("DB_URL")
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DB_URL")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # load file from .env file
@@ -34,30 +34,21 @@ def create_app():
     cursor = connection.cursor()
     print("CURSOR:", cursor)
 
-
+    # binding the instance to a very specific Flask app
+    # initialize app for use with this database setup
     db = SQLAlchemy(app)
     db.init_app(app)
 
+    # root route
     @app.route('/')
     def root():
         DB.create_all()
-        return "welcome to Med Cab"
+        return "Welcome to Med Cab"
 
-    @app.route('/predict', methods=['POST', 'GET'])
-    def root():
-        req_data = request.get_json(force=True)
-        output = predict(req_data)
-        return jsonify(output)
-
-    @app.route('/strains', methods=['POST'])
-    def strains():
-
-
-        return output
-
-    @app.route("/<test>", methods=['GET'])
-    def predict_strain(text=None):
+    @app.route("/test", methods=['GET'])
+    def predict_strain(test):
+        text = request.get_json(force=True)
         predictions = predict(text)
         return jsonify(predictions)
-
+    
     return app
