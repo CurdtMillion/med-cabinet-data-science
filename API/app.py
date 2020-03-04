@@ -5,7 +5,6 @@ Main application and routing logic
 import os
 
 #  Database + Heroku + Postgres
-from decouple import config
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
@@ -13,7 +12,8 @@ import psycopg2
 from .models import DB
 
 # import model
-from API.nearest_neighbors_model import predict
+from nearest_neighbors_model import predict
+
 
 def create_app():
     """Create and configure an instance of the Flask application"""
