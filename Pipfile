@@ -13,6 +13,7 @@ python-dotenv = "*"
 psycopg2-binary = "*"
 pandas = "*"
 gunicorn = "*"
+scikit-learn = "*"
 
 [requires]
 python_version = "3.7"

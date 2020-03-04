@@ -5,7 +5,6 @@ Main application and routing logic
 import os
 
 #  Database + Heroku + Postgres
-from decouple import config
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
@@ -13,7 +12,7 @@ import psycopg2
 from .models import DB
 
 # import model
-from .nearest_neighbors_model import predict
+from nearest_neighbors_model import predict
 
 
 def create_app():
@@ -50,6 +49,6 @@ def create_app():
     @app.route("/test", methods=['GET'])
     def predict_strain(text='I have fibromyalgia and I want pain relief'):
         predictions = predict(text)
-        return str(predictions)
+        return jsonify(predictions)
     
     return app
