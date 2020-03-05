@@ -10,6 +10,7 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 import psycopg2
 from .models import DB, Strain
+from flask_cors import CORS
 
 # import model
 #from nearest_neighbors_model import predict
@@ -54,6 +55,7 @@ def predict(request_text):
 def create_app():
     """Create and configure an instance of the Flask application"""
     app = Flask(__name__)
+    CORS(app)
     # consider using config
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DB_URL")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

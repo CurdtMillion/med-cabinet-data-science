@@ -14,6 +14,7 @@ psycopg2-binary = "*"
 pandas = "*"
 gunicorn = "*"
 scikit-learn = "*"
+flask-cors = "*"
 
 [requires]
 python_version = "3.7"
