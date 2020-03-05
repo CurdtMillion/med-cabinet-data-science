@@ -82,7 +82,7 @@ def create_app():
         DB.create_all()
         return "Welcome to Med Cab"
     @app.route("/test", methods=['POST', 'GET'])
-    def predict_strain():
+    def predict_strain(text=''):
         text = request.get_json(force=True)
         predictions = predict(text)
         return jsonify(predictions)
