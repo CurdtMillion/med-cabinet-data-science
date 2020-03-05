@@ -33,7 +33,7 @@ transformer = TfidfVectorizer(stop_words="english", min_df=0.025, max_df=0.98, n
 dtm = transformer.fit_transform(strains['lemmas'])
 dtm = pd.DataFrame(dtm.todense(), columns=transformer.get_feature_names())
 
-model = NearestNeighbors(n_neighbors=3, algorithm='kd_tree')
+model = NearestNeighbors(n_neighbors=10, algorithm='kd_tree')
 model.fit(dtm)
 
 
