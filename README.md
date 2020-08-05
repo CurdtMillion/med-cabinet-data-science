@@ -52,7 +52,7 @@ python -m ipykernel install --user --name med-cabinet --display "med-cabinet (Py
 
 # Run it
 ```bash
-$ gunicorn -w 4 src:APP -t 120
+$ gunicorn -w 4 src:APP -t 240
 ```
 ```console
 [2020-08-05 17:09:34 -0400] [59361] [INFO] Starting gunicorn 20.0.4
