@@ -53,6 +53,7 @@ python -m ipykernel install --user --name med-cabinet --display "med-cabinet (Py
 # Run it
 ```console
 $gunicorn -w 4 src:APP -t 120
+
 [2020-08-05 17:09:34 -0400] [59361] [INFO] Starting gunicorn 20.0.4
 [2020-08-05 17:09:34 -0400] [59361] [INFO] Listening at: http://127.0.0.1:8000 (59361)
 [2020-08-05 17:09:34 -0400] [59361] [INFO] Using worker: sync
