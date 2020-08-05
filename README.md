@@ -24,7 +24,7 @@ This project was created using [Conda](https://docs.conda.io/projects/conda/en/l
 git clone https://github.com/andronikmk/med-cabinet-data-science.git
 cd med-cabinet-data-science
 ```
-## Create an enviornment using Pipenv
+### Create an enviornment using Pipenv
 Make sure to be in the correct directory and specify specific versions of Python 3.7.
 ```bash
 # install dependencies
@@ -34,3 +34,30 @@ pipenv install
 pipenv shell
 ```
 
+### Create enviornment with conda and pip
+Make sure to be in the correct directory.
+```bash
+# create conda env.
+conda create -n med-cabinet python==3.7
+
+# activate env
+conda activate medi-cabinet
+
+# pip install dependencies
+pip install -r requirements.txt
+
+# add JSON object to an iPython file.
+python -m ipykernel install --user --name med-cabinet --display "med-cabinet (Python3)"
+```
+
+# Run it
+```console
+$gunicorn -w 4 src:APP -t 120
+[2020-08-05 17:09:34 -0400] [59361] [INFO] Starting gunicorn 20.0.4
+[2020-08-05 17:09:34 -0400] [59361] [INFO] Listening at: http://127.0.0.1:8000 (59361)
+[2020-08-05 17:09:34 -0400] [59361] [INFO] Using worker: sync
+[2020-08-05 17:09:34 -0400] [59364] [INFO] Booting worker with pid: 59364
+[2020-08-05 17:09:34 -0400] [59368] [INFO] Booting worker with pid: 59368
+[2020-08-05 17:09:34 -0400] [59369] [INFO] Booting worker with pid: 59369
+[2020-08-05 17:09:35 -0400] [59376] [INFO] Booting worker with pid: 59376
+```
