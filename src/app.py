@@ -1,27 +1,27 @@
 """
 Main application and routing logic
 """
-# Standard imports
-import os
 
-#  Database + Heroku + Postgres
+import os
+import pickle
+
+import pandas as pd
+import psycopg2
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
-from flask_sqlalchemy import SQLAlchemy
-import psycopg2
-from .models import DB, Strain
 from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.neighbors import NearestNeighbors
+
+from .models import DB, Strain
 
 # import model
-#from nearest_neighbors_model import predict
+# from nearest_neighbors_model import predict
 
 
 ####################################################
 
-import pickle
-import pandas as pd
-from sklearn.neighbors import NearestNeighbors
-from sklearn.feature_extraction.text import TfidfVectorizer
 
 # changed from relative to to full path
 
@@ -54,35 +54,37 @@ def predict(request_text):
 
 def create_app():
     """Create and configure an instance of the Flask application"""
+    
+    # initialize the Flask-Cors extension 
     app = Flask(__name__)
     CORS(app)
-    # consider using config
+    
+    # load keys from .env files
+    load_dotenv()
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DB_URL")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    # load file from .env file
-    load_dotenv()
     db_name = os.getenv("DB_NAME")
     db_user = os.getenv("DB_USER")
     db_password = os.getenv("DB_PASSWORD")
     db_host = os.getenv("DB_HOST")
 
-    # establish cursor and connection
+    
+    # Create a new database session and return a new connection object.
     connection = psycopg2.connect(dbname=db_name, user=db_user, password=db_password, host=db_host)
-    print("CONNECTION:", connection)
     cursor = connection.cursor()
-    print("CURSOR:", cursor)
 
-    # binding the instance to a very specific Flask app
+    # bind the instance to specific flask app
     # initialize app for use with this database setup
     db = SQLAlchemy(app)
     db.init_app(app)
 
-    # root route
+    # set routes
     @app.route('/')
     def root():
         DB.create_all()
         return "Welcome to Med Cab"
+    
     @app.route("/test", methods=['POST', 'GET'])
     def predict_strain():
         text = request.get_json(force=True)
