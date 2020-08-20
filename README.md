@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/andronikmk/med-cabinet-data-science/master)
 
 # Introduction to Med Cabinet
-App for new cannabis consumers (especially those trying to get off of pharmaceuticals) who want to use cannabis as a means to battle medical conditions and ailments. Helping patients find the right strains, dosing, intake method and intake schedule!
+Med Cabinet is an application for new cannabis consumers who want to use cannabis as a means to battle medical conditions and ailments. In addition, Med Cabinet helps patients find the right strain, dosing, intake methods and scheduale. This application is built using Flask, along with a PostgreSQL database hosted database. The API is deployed to Heroku at which point a front-end team is tasked to build a user interface. This is a cross functional project during which my team was tasked to build a Flask app and PostgreSQL database. An additional data science team was responisble to the model used for this app as well as choosing the metrics to measure our models success.
 
 # Install
 This repo is tested on Python 3.7+, PyTorch 1.0.0+ (PyTorch 1.3.1+ for examples) and TensorFlow 2.0.
