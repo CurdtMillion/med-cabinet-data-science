@@ -4,11 +4,7 @@
     <br>
 <p>
 
-<p align="center">
-    <a href="https://github.com/andronikmk/toxic-content-monitoring/blob/master/LICENSE">
-        <img alt="GitHub" src="https://img.shields.io/badge/License-MIT-blue.svg">
-    </a>
-</p>
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/andronikmk/med-cabinet-data-science/master)
 
 # Introduction to Med Cabinet
 App for new cannabis consumers (especially those trying to get off of pharmaceuticals) who want to use cannabis as a means to battle medical conditions and ailments. Helping patients find the right strains, dosing, intake method and intake schedule!
